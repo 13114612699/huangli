@@ -22,7 +22,6 @@ def save_webpage_as_image(url, image_path):
     driver.implicitly_wait(5) # 隐式等待5秒
     driver.get(url)
     driver.maximize_window()
-    time.sleep(5)  # 等待页面加载完成
     timestamp = datetime.now().strftime('%Y%m%d%H%M%S')  # 当前时间戳
     image_name = f'webpage_{timestamp}.png'
     driver.get_screenshot_as_file(f'{image_path}/{image_name}')
