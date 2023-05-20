@@ -5,6 +5,7 @@ import selenium
 from selenium import webdriver
 from datetime import datetime
 from selenium.webdriver import ChromeOptions
+from selenium.webdriver.common.by import By
 
 image_path = 'images'  # 图片保存路径
 if not os.path.exists(image_path):
@@ -21,6 +22,11 @@ def save_webpage_as_image(url, image_path):
     driver = webdriver.Chrome(options=option)  # 使用Chrome浏览器
     driver.implicitly_wait(5) # 隐式等待5秒
     driver.get(url)
+    # https://www.google.com/finance;?hl=zh需要点击接受方可显示
+    if url == 'https://www.google.com/finance;?hl=zh':
+        element = driver.find_element(By.XPATH, '//span[text()="全部接受"]')
+        element.click()
+    driver.set_window_size(1920, 1080)
     driver.maximize_window()
     timestamp = datetime.now().strftime('%Y%m%d%H%M%S')  # 当前时间戳
     image_name = f'webpage_{timestamp}.png'
